@@ -2,14 +2,17 @@ EMPLOYEES = [
     {
         "id": 1,
         "name": "Gary McGarison",
+        "locationId": 2
     },
     {
         "id": 2,
         "name": "Larry McLarrison",
+        "locationId": 3
     },
     {
         "id": 3,
         "name": "Tim McTimison",
+        "locationId": 1
     }
 ]
 
@@ -46,3 +49,9 @@ def delete_employee(id):
 
     if employee_index >= 0:
         EMPLOYEES.pop(employee_index)
+
+def update_employee(id, new_employee):
+    for index, employee in enumerate(EMPLOYEES):
+        if employee["id"] == id:
+            EMPLOYEES[index] = new_employee
+            break
