@@ -2,17 +2,20 @@ CUSTOMERS = [
     {
         "id": 1,
         "name": "Sara McSarison",
-        "address": "1234 Street Rd"
+        "address": "1234 Street Rd",
+        "locationId": 1
     },
     {
         "id": 2,
         "name": "Dara McDarison",
-        "address": "1234 Street Rd"
+        "address": "1234 Street Rd",
+        "locationId": 2
     },
     {
         "id": 3,
         "name": "Tina McTinason",
-        "address": "1234 Street Rd"
+        "address": "1234 Street Rd",
+        "locationId": 3
     }
 ]
 
@@ -49,3 +52,9 @@ def delete_customer(id):
 
     if customer_index >= 0:
         CUSTOMERS.pop(customer_index)
+
+def update_customer(id, new_customer):
+    for index, customer in enumerate(CUSTOMERS):
+        if customer["id"] == id:
+            CUSTOMERS[index] = new_customer
+            break
