@@ -6,8 +6,6 @@ from locations import get_single_location, get_all_locations, create_location, d
 
 import json
 
-
-
 # Here's a class. It inherits from another class.
 class HandleRequests(BaseHTTPRequestHandler):
     def parse_url(self, path):
@@ -24,6 +22,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             key = pair[0]  # 'email'
             value = pair[1]  # 'jenna@solis.com'
 
+            print(resource, key, value)
             return ( resource, key, value )
 
         # No query string parameter
@@ -44,6 +43,13 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+        self.send_header('Access-Control-Allow-Headers', 'X-Requested-With')
         self.end_headers()
 
     # Here's a method on the class that overrides the parent's method.
