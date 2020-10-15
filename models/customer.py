@@ -9,7 +9,3 @@ class Customer():
         self.address = address
         self.email = email
         self.password = password
-
-#         "name": "Sara McSarison",
-#         "address": "1234 Street Rd",
-#         "locationId": 1
