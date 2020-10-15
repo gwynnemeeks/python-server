@@ -2,22 +2,6 @@ import sqlite3
 import json
 from models import Location
 
-LOCATIONS = [
-    {
-        "id": 1,
-        "city": "Nashville",
-    },
-    {
-        "id": 2,
-        "city": "Charlotte",
-    },
-    {
-        "id": 3,
-        "city": "Chattanooga",
-    }
-]
-
-
 def get_all_locations():
     # Open a connection to the database
     with sqlite3.connect("./kennel.db") as conn:
@@ -80,21 +64,21 @@ def get_single_location(id):
 
         return json.dumps(location.__dict__)
 
-def create_location(location):
-    # Get the id value of the last locations in the list
-    max_id = LOCATIONS[-1]["id"]
+# def create_location(location):
+#     # Get the id value of the last locations in the list
+#     max_id = LOCATIONS[-1]["id"]
 
-    # Add 1 to whatever that number is
-    new_id = max_id + 1
+#     # Add 1 to whatever that number is
+#     new_id = max_id + 1
 
-    # Add an `id` property to the locations dictionary
-    location["id"] = new_id
+#     # Add an `id` property to the locations dictionary
+#     location["id"] = new_id
 
-    # Add the locations dictionary to the list
-    LOCATIONS.append(location)
+#     # Add the locations dictionary to the list
+#     LOCATIONS.append(location)
 
-    # Return the dictionary with `id` property added
-    return location
+#     # Return the dictionary with `id` property added
+#     return location
 
 def delete_location(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -105,8 +89,8 @@ def delete_location(id):
         WHERE id = ?
         """, (id, ))
 
-def update_location(id, new_location):
-    for index, location in enumerate(LOCATIONS):
-        if location["id"] == id:
-            LOCATIONS[index] = new_location
-            break
+# def update_location(id, new_location):
+#     for index, location in enumerate(LOCATIONS):
+#         if location["id"] == id:
+#             LOCATIONS[index] = new_location
+#             break
