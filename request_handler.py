@@ -192,7 +192,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 # point of this application.
 def main():
     host = ''
-    port = 3000
+    port = 8088
     HTTPServer((host, port), HandleRequests).serve_forever()
 
 if __name__ == "__main__":
