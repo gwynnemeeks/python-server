@@ -2,25 +2,6 @@ import sqlite3
 import json
 from models import Employee
 
-EMPLOYEES = [
-    {
-        "id": 1,
-        "name": "Gary McGarison",
-        "locationId": 2
-    },
-    {
-        "id": 2,
-        "name": "Larry McLarrison",
-        "locationId": 3
-    },
-    {
-        "id": 3,
-        "name": "Tim McTimison",
-        "locationId": 1
-    }
-]
-
-
 def get_all_employees():
     # Open a connection to the database
     with sqlite3.connect("./kennel.db") as conn:
@@ -110,16 +91,16 @@ def get_employees_by_location(location_id):
 
     return json.dumps(employees)
 
-def create_employee(employee):
-    max_id = EMPLOYEES[-1]["id"]
+# def create_employee(employee):
+#     max_id = EMPLOYEES[-1]["id"]
 
-    new_id = max_id + 1
+#     new_id = max_id + 1
 
-    employee["id"] = new_id
+#     employee["id"] = new_id
 
-    EMPLOYEES.append(employee)
+#     EMPLOYEES.append(employee)
 
-    return employee
+#     return employee
 
 def delete_employee(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -130,8 +111,8 @@ def delete_employee(id):
         WHERE id = ?
         """, (id, ))
 
-def update_employee(id, new_employee):
-    for index, employee in enumerate(EMPLOYEES):
-        if employee["id"] == id:
-            EMPLOYEES[index] = new_employee
-            break
+# def update_employee(id, new_employee):
+#     for index, employee in enumerate(EMPLOYEES):
+#         if employee["id"] == id:
+#             EMPLOYEES[index] = new_employee
+#             break

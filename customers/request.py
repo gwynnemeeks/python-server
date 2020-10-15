@@ -2,27 +2,6 @@ import sqlite3
 import json
 from models import Customer
 
-CUSTOMERS = [
-    {
-        "id": 1,
-        "name": "Sara McSarison",
-        "address": "1234 Street Rd",
-        "locationId": 1
-    },
-    {
-        "id": 2,
-        "name": "Dara McDarison",
-        "address": "1234 Street Rd",
-        "locationId": 2
-    },
-    {
-        "id": 3,
-        "name": "Tina McTinason",
-        "address": "1234 Street Rd",
-        "locationId": 3
-    }
-]
-
 def get_all_customers():
     # Open a connection to the database
     with sqlite3.connect("./kennel.db") as conn:
@@ -88,16 +67,16 @@ def get_single_customer(id):
 
         return json.dumps(customer.__dict__)
 
-def create_customer(customer):
-    max_id = CUSTOMERS[-1]["id"]
+# def create_customer(customer):
+#     max_id = CUSTOMERS[-1]["id"]
 
-    new_id = max_id + 1
+#     new_id = max_id + 1
 
-    customer["id"] = new_id
+#     customer["id"] = new_id
 
-    CUSTOMERS.append(customer)
+#     CUSTOMERS.append(customer)
 
-    return customer
+#     return customer
 
 def delete_customer(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -108,11 +87,11 @@ def delete_customer(id):
         WHERE id = ?
         """, (id, ))
 
-def update_customer(id, new_customer):
-    for index, customer in enumerate(CUSTOMERS):
-        if customer["id"] == id:
-            CUSTOMERS[index] = new_customer
-            break
+# def update_customer(id, new_customer):
+#     for index, customer in enumerate(CUSTOMERS):
+#         if customer["id"] == id:
+#             CUSTOMERS[index] = new_customer
+#             break
 
 def get_customer_by_email(email):
     
