@@ -67,16 +67,16 @@ def get_single_customer(id):
 
         return json.dumps(customer.__dict__)
 
-# def create_customer(customer):
-#     max_id = CUSTOMERS[-1]["id"]
+def create_customer(customer):
+    max_id = CUSTOMERS[-1]["id"]
 
-#     new_id = max_id + 1
+    new_id = max_id + 1
 
-#     customer["id"] = new_id
+    customer["id"] = new_id
 
-#     CUSTOMERS.append(customer)
+    CUSTOMERS.append(customer)
 
-#     return customer
+    return customer
 
 def delete_customer(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -87,11 +87,32 @@ def delete_customer(id):
         WHERE id = ?
         """, (id, ))
 
-# def update_customer(id, new_customer):
-#     for index, customer in enumerate(CUSTOMERS):
-#         if customer["id"] == id:
-#             CUSTOMERS[index] = new_customer
-#             break
+def update_customer(id, new_customer):
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        UPDATE Customer
+            SET
+                name = ?,
+                address = ?,
+                email = ?,
+                password =?
+        WHERE id = ?
+        """, (new_customer['name'], new_customer['address'],
+              new_customer['email'], new_customer['password'],
+              id, ))
+
+        # Were any rows affected?
+        # Did the client send an `id` that exists?
+        rows_affected = db_cursor.rowcount
+
+    if rows_affected == 0:
+        # Forces 404 response by main module
+        return False
+    else:
+        # Forces 204 response by main module
+        return True
 
 def get_customer_by_email(email):
     

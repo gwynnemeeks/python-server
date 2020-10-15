@@ -64,21 +64,21 @@ def get_single_location(id):
 
         return json.dumps(location.__dict__)
 
-# def create_location(location):
-#     # Get the id value of the last locations in the list
-#     max_id = LOCATIONS[-1]["id"]
+def create_location(location):
+    # Get the id value of the last locations in the list
+    max_id = LOCATIONS[-1]["id"]
 
-#     # Add 1 to whatever that number is
-#     new_id = max_id + 1
+    # Add 1 to whatever that number is
+    new_id = max_id + 1
 
-#     # Add an `id` property to the locations dictionary
-#     location["id"] = new_id
+    # Add an `id` property to the locations dictionary
+    location["id"] = new_id
 
-#     # Add the locations dictionary to the list
-#     LOCATIONS.append(location)
+    # Add the locations dictionary to the list
+    LOCATIONS.append(location)
 
-#     # Return the dictionary with `id` property added
-#     return location
+    # Return the dictionary with `id` property added
+    return location
 
 def delete_location(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -89,8 +89,25 @@ def delete_location(id):
         WHERE id = ?
         """, (id, ))
 
-# def update_location(id, new_location):
-#     for index, location in enumerate(LOCATIONS):
-#         if location["id"] == id:
-#             LOCATIONS[index] = new_location
-#             break
+def update_location(id, new_location):
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        UPDATE Location
+            SET
+                name = ?,
+                address = ?
+        WHERE id = ?
+        """, (new_location['name'], new_location['address'], id, ))
+
+        # Were any rows affected?
+        # Did the client send an `id` that exists?
+        rows_affected = db_cursor.rowcount
+
+    if rows_affected == 0:
+        # Forces 404 response by main module
+        return False
+    else:
+        # Forces 204 response by main module
+        return True
