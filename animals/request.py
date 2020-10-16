@@ -32,7 +32,7 @@ def update_animal(id, new_animal):
                 location_id = ?,
                 customer_id = ?
         WHERE id = ?
-        """, (new_animal['name'], new_animal['species'],
+        """, (new_animal['name'], new_animal['breed'],
               new_animal['status'], new_animal['location_id'],
               new_animal['customer_id'], id, ))
 
@@ -71,9 +71,15 @@ def get_all_animals():
             a.name,
             a.breed,
             a.status,
+            a.location_id,
             a.customer_id,
-            a.location_id
-        FROM animal a
+            l.name location_name,
+            l.address location_address,
+            c.name customer_name,
+            c.address customer_address
+        FROM Animal a
+        JOIN Location l ON l.id = a.location_id
+        JOIN Customer c on c.id = a.customer_id
         """)
 
         # Initialize an empty list to hold all animal representations
@@ -89,9 +95,16 @@ def get_all_animals():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # Animal class above.
-            animal = Animal(row['id'], row['name'], row['breed'],
-                            row['status'], row['location_id'],
-                            row['customer_id'])
+            animal = Animal(row['name'], row['breed'], row['status'],
+                    row['location_id'], row['customer_id'], row['id'])
+
+    # Create a Location instance from the current row
+            location = Location(row['id'], row['location_name'], row['location_address'])
+
+            customer = Customer(row['id'], row['customer_name'], row['customer_address'])
+            
+            animal.location = location.__dict__
+            animal.customer = customer.__dict__
 
             animals.append(animal.__dict__)
 
@@ -113,7 +126,7 @@ def get_single_animal(id):
             a.breed,
             a.status,
             a.customer_id,
-            a.location_id
+            a.location_id,
             c.name customer_name,
             l.name location_name
         FROM animal a
