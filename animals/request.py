@@ -76,8 +76,7 @@ def get_all_animals():
             l.name location_name,
             l.address location_address
         FROM Animal a
-        JOIN Location l
-        ON l.id = a.location_id
+        JOIN Location l ON l.id = a.location_id
         """)
 
         # Initialize an empty list to hold all animal representations
@@ -99,10 +98,7 @@ def get_all_animals():
     # Create a Location instance from the current row
             location = Location('', row['location_name'], row['location_address'])
 
-            # customer = Customer('', row['customer_name'], '')
-
             animal.location = location.__dict__
-            # animal.customer = customer.__dict__
 
             animals.append(animal.__dict__)
 
